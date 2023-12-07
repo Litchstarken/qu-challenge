@@ -2,7 +2,6 @@ import { describe, it, expect } from 'vitest';
 import PlanetList from '../../components/PlanetsList.vue';
 import { mount } from '@vue/test-utils';
 
-// Create a custom store handler to replace Vuex
 const customStore = {
   state: {
     planets: [

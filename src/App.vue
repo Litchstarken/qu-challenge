@@ -3,7 +3,7 @@
     <v-app>
       <v-main>
         <v-container>
-          <PlanetList /> <!-- Include the PlanetList component here -->
+          <PlanetList /> 
         </v-container>
       </v-main>
     </v-app>
@@ -12,11 +12,11 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import PlanetList from './components/PlanetsList.vue'; // Adjust the path
+import PlanetList from './components/PlanetsList.vue'; 
 
 export default defineComponent({
   components: {
-    PlanetList, // Register the PlanetList component
+    PlanetList, 
   },
 });
 </script>
