@@ -15,12 +15,14 @@ export interface People {
   name: string;
   homeworld: string;
   films: string[];
+  url: string;
 }
 export interface Films {
   episode_id: number;
   title: string;
   characters: string[];
   planets: string[];
+  url: string;
   [key: string]: string | number | string[]
 }
 

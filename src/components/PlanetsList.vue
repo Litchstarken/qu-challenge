@@ -3,48 +3,39 @@
   <!-- Search input -->
   <v-container>
     <v-row no-gutters>
-      <v-col >
+      <v-col>
         <v-sheet class="pa-2 ma-2">
-          <v-text-field
-            v-model="searchQuery"
-            hide-details="auto"
-            label="search planet"
-            placeholder="Search by planet or film name"
-            type="text"
-          ></v-text-field>
-        </v-sheet>
-      </v-col>
-      <v-col >
-        <v-sheet class="pa-2 ma-2">
-          <v-text-field
-            v-model="searchQueryFilms"
-            hide-details="auto"
-            label="search film"
-            placeholder="Search by film name"
-            type="text"
-          ></v-text-field>
+          <v-text-field v-model="searchQuery" hide-details="auto" label="Filter by planet name, film, or character"
+            placeholder="Filter by planet, film, or character" type="text"></v-text-field>
         </v-sheet>
       </v-col>
       <!-- Sorting select -->
       <v-col cols="2">
         <v-sheet class="pa-2 ma-2">
           <div class="drop-down-wrapper">
-          <select v-model="sortBy" class="dropdown-selected-option" label="Select">
-            <option value="name"> By Alphabetic Order</option>
-            <option value="residents">By Residents</option>
-            <option value="population">By Population</option>
-            <option value="films">By Films Appeareance</option>
-          </select>
-        </div>
+            <select v-model="sortBy" class="dropdown-selected-option" label="Select">
+              <option :value="null" disabled selected>Choose an option to</option>
+              <option value="name">By Alphabetic Order</option>
+              <option value="residents">By Residents</option>
+              <option value="population">By Population</option>
+              <option value="films">By Films Appearance</option>
+            </select>
+          </div>
+        </v-sheet>
+      </v-col>
+      <v-col cols="2">
+        <v-sheet class="pa-2 ma-2">
+          <v-btn @click="toggleSortDirection">
+            Toggle Sort Direction
+          </v-btn>
         </v-sheet>
       </v-col>
     </v-row>
-  
-</v-container>
+  </v-container>
 
   <v-container>
     <v-row>
-      <v-col v-for="planet in planets" :key="planet.id" cols="12" sm="6" md="4" lg="3">
+      <v-col v-for="(result, index) in results" :key="index" cols="12" sm="6" md="4" lg="3">
         <v-card :loading="loading" class="mx-auto my-12" max-width="374">
           <template v-slot:loader="{ isActive }">
             <v-progress-linear :active="isActive" color="deep-purple" height="4" indeterminate></v-progress-linear>
@@ -53,20 +44,20 @@
           <v-img cover height="250" src="https://picsum.photos/200/300"></v-img>
 
           <v-card-item>
-            <v-card-title> {{ planet.name }} </v-card-title>
+            <v-card-title> {{ result.name }} </v-card-title>
 
             <v-card-subtitle class="pt-4">
-              Films appeareance: {{ planet.films.length }}
+              Films appearance: {{ result.films.length }}
             </v-card-subtitle>
           </v-card-item>
           <v-card-text>
             <div>
-              Population: {{ planet.population }}
+              Population: {{ result.population }}
             </div>
           </v-card-text>
           <v-card-text>
             <div>
-              residents: {{ planet.residents.length }}
+              Residents: {{ result.residents.length }}
             </div>
           </v-card-text>
 
@@ -87,10 +78,8 @@
             </v-snackbar>
           </v-card-actions>
           <div>
-
           </div>
         </v-card>
-
       </v-col>
     </v-row>
   </v-container>
@@ -99,58 +88,56 @@
       Vite, TypeScript, Vuetify, Axios, & Vitest for Star Wars API integration.
       Leveraged Vuex for state management & custom store handling in tests.
     </div>
-
     <v-divider></v-divider>
-
     <div>
       {{ new Date().toLocaleDateString() }} — <strong>John Castillo</strong> —
     </div>
   </v-footer>
 </template>
-  
+
 <script lang="ts">
 import { defineComponent, computed } from 'vue';
-import { usePlanetModule } from '../store/PlanetModule'; // Adjust the path
-
+import { usePlanetModule } from '../store/PlanetModule';
 
 export default defineComponent({
   data: () => ({
     snackbar: false,
     text: `Soon, very soon!!!`,
-    items: [
-      {name:'Foo',value:"name"}, 
-      'Bar', 
-      'Fizz', 
-      'Buzz'
-    ],
   }),
- 
+
   setup() {
-    const { planets, films, loading, error, searchQuery, searchQueryFilms, sortBy } = usePlanetModule();
+    const {
+      results, // Use the results computed property 
+      loading,
+      error,
+      searchQuery,
+      sortBy,
+      toggleSortDirection,
+    } = usePlanetModule();
 
     return {
-      planets: computed(() => planets.value),
-      films: computed(() => films.value),
+      results: computed(() => results.value),
       loading: computed(() => loading.value),
       error: computed(() => error.value),
       searchQuery,
-      searchQueryFilms,
       sortBy,
+      toggleSortDirection,
     };
   },
 });
 </script>
-  
+
 <style scoped>
 .planet-card {
   margin: 1rem;
 }
+
 .drop-down-wrapper {
-  padding: 16px;
   cursor: pointer;
   max-width: 200px;
   margin: 0 auto;
 }
+
 .dropdown-selected-option {
   padding: 16px;
   border: solid 1px #2c3e50;
@@ -160,4 +147,3 @@ export default defineComponent({
   cursor: pointer;
 }
 </style>
-  

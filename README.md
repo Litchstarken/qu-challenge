@@ -1,4 +1,4 @@
-# Vue 3 + TypeScript + Vite + Typescript + Vuetify + Axios & Vitest for Star Wars API integration
+# Vue 3 + TypeScript + Vite + Vuetify + Axios & Vitest for Star Wars API integration
 
 ## Procedure & Metodology.
 
