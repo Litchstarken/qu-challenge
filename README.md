@@ -11,6 +11,7 @@ end of the challege.
 *** What's a closure? Where in the code is there a closure?
 - A closure is a function that has access to its own scope, the outer (enclosing) function's scope, and the global scope.
 - In the code provided, there is a closure in the test code where the customStore object is defined inside the describe block but is accessed within the it block.
+- You may find another closure in the PlanetModule.ts line 77 where the getPlanetCharacters function is defined inside the filteredResults method.
 
 *** Which are the potential side-effects in any function? Could you point out any of these cases in
 your code? Are they expected? Can they be avoided?
